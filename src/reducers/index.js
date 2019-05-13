@@ -6,7 +6,7 @@ const initialState = {
     {
       id: "0",
       authorId: "Ryan Florence",
-      time: "3:37",
+      time: null,
       text: "Alright, lets do this.",
       avatar: "https://placekitten.com/64/64"
     }
@@ -14,6 +14,7 @@ const initialState = {
 };
 
 const reducers = (state = initialState, action) => {
+  console.log(action)
   switch(action.type) {
     case SET_MESSAGES: {
       return {
@@ -23,8 +24,8 @@ const reducers = (state = initialState, action) => {
           {
             id: action.id,
             authorId: action.authorId,
-            text: action.text,
             time: action.time,
+            text: action.text,
             avatar: action.avatar
           }
         ]
