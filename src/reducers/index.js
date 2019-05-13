@@ -14,7 +14,6 @@ const initialState = {
 };
 
 const reducers = (state = initialState, action) => {
-  console.log(action)
   switch(action.type) {
     case SET_MESSAGES: {
       return {

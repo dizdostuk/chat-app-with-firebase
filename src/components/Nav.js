@@ -1,32 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { db } from "../firebase";
+import React from 'react';
+import useCollection from "../useCollection";
 
 
 
 function Nav() {
-  const [channels, setChannels] = useState([
-    {
-      topic: "Talk about anything work stuff",
-      id: "general"
-    }]);
-  const [mainChannel, setMainChannel] = useState("general");
 
-
-  useEffect(() => {
-    db.collection('channels').onSnapshot(snapShot => {
-      const docs = [];
-      snapShot.forEach(doc => {
-        docs.push({
-          ...doc.data(),
-          id: doc.id
-        });
-      });
-      setChannels(docs);
-    });
-    let activeLink = document.querySelector("."+mainChannel);
-    activeLink.classList.add("active");
-    return;
-  }, []);
+  const channels = useCollection("channels");
 
   return (
     <div className="Nav">
@@ -45,7 +24,7 @@ function Nav() {
       </div>
       <nav className="ChannelNav">
         {channels.map(channel => (
-          <a key={channel.id+`$`} className={channel.id} href={`/channel/${channel.id}`}>#{channel.id}</a>
+          <a key={channel.id} className={channel.id} href={`/channel/${channel.id}`}>#{channel.id}</a>
         ))}
       </nav>
     </div>

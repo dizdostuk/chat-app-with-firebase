@@ -1,30 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import Message from './Message';
+import React from 'react';
 import { connect } from 'react-redux';
-import { db } from "../firebase";
+import useCollection from "../useCollection";
 
-function Messages({ currentUser, msgs }) {
-  // const [currentUser, setCurrentUser] = useState({
-  //   "author": "Ryan Florence",
-  //   "avatar": "https://placekitten.com/64/64"
-  // });
-  // const [whoSend, setSendler] = useState(currentUser.author);
 
-  const [messages, setMessages] = useState([]);
-  console.log(messages)
-  useEffect(() => {
-    db.collection('channels').doc('general').collection('messages').onSnapshot(snapshot => {
-      const docs = [];
-      snapshot.forEach(doc => {
-        docs.push({
-          ...doc.data(),
-          id: doc.id
-        });
-      });
+function Messages() {
 
-      setMessages(docs);
-    });
-  }, []);
+  const messages = useCollection(
+    "channels/general/messages",
+    "createdAt"
+  );
+
   return (
     <div className="Messages">
       <div className="EndOfMessages">That's every message!</div>
@@ -60,15 +45,15 @@ function Messages({ currentUser, msgs }) {
   );
 };
 
-const mapStateToProps = ({currentUser, messages}) => {
-  return {
-    currentUser,
-    messages
-  };
-};
+// const mapStateToProps = ({currentUser, messages}) => {
+//   return {
+//     currentUser,
+//     messages
+//   };
+// };
 
 
 export default connect(
-  mapStateToProps,
+  null,
   null
 )(Messages);
