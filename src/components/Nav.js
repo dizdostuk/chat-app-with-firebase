@@ -1,9 +1,9 @@
 import React from 'react';
 import useCollection from "../useCollection";
+import { firebase } from "../firebase";
 
 
-
-function Nav() {
+function Nav({ user }) {
 
   const channels = useCollection("channels");
 
@@ -13,12 +13,15 @@ function Nav() {
         <img
           className="UserImage"
           alt="whatever"
-          src="https://placekitten.com/64/64"
+          src={user.photoURL}
         />
         <div>
-          <div>Ryan Florence</div>
+          <div>{user.displayName}</div>
           <div>
-            <button className="text-button">log out</button>
+            <button onClick={(e) => {
+              e.preventDefault();
+              firebase.auth().signOut();
+            }} className="text-button">log out</button>
           </div>
         </div>
       </div>

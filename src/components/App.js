@@ -5,6 +5,28 @@ import { firebase } from "../firebase";
 
 function App() {
 
+  const user = useAuth();
+  
+  
+  const handleSignIn = async () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    await firebase.auth().signInWithPopup(provider);
+  };
+
+  return user ? (
+    <div className="App">
+      <Nav user={user} />
+      <Channel />
+    </div>
+  ) : (
+    <div className="Login">
+      <h1>Login to Chat-App</h1>
+      <button onClick={handleSignIn} className="btn">Signin</button>
+    </div>
+  );
+};
+
+function useAuth() {
   const [ user, setUser ] = useState(null);
 
   useEffect(() => {
@@ -16,23 +38,8 @@ function App() {
       }
     })
   }, []);
-  
-  const handleSignIn = async () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    await firebase.auth().signInWithPopup(provider);
-  };
 
-  return user ? (
-    <div className="App">
-      <Nav />
-      <Channel />
-    </div>
-  ) : (
-    <div className="Login">
-      <h1>Login to Chat-App</h1>
-      <button onClick={handleSignIn} className="btn">Signin</button>
-    </div>
-  );
+  return user;
 }
 
 export default App;
