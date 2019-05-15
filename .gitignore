@@ -43,6 +43,10 @@ bower_components
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 
+# Firebase auth keys
+
+src/firebase
+
 # Dependency directories
 node_modules/
 
