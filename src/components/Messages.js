@@ -4,10 +4,10 @@ import useCollection from "../useCollection";
 import { db } from '../firebase';
 
 
-function Messages() {
+function Messages({ channelId }) {
 
   const messages = useCollection(
-    "channels/general/messages",
+    `channels/${channelId}/messages`,
     "createdAt"
   );
 

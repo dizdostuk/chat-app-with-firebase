@@ -4,7 +4,7 @@ import { setMessages } from "../actions";
 import { db } from "../firebase";
 
 
-function ChatInputBox({ user }) {
+function ChatInputBox({ user, channelId }) {
   
   const [ inpValue, setValue ] = useState("");
 
@@ -13,7 +13,7 @@ function ChatInputBox({ user }) {
       // sendMessage(value);
       setValue("");
       db.collection('channels')
-        .doc('general')
+        .doc(channelId)
         .collection('messages')
         .add({
           user: db.collection("users").doc(user.uid),
