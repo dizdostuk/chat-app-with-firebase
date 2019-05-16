@@ -5,7 +5,7 @@ import { db } from '../firebase';
 
 
 function Messages({ channelId }) {
-
+  console.log(channelId)
   const messages = useCollection(
     `channels/${channelId}/messages`,
     "createdAt"
@@ -22,6 +22,7 @@ function Messages({ channelId }) {
           !previous || message.user.id !== previous.user.id;
         return showAvatar ? (
           <FirstMessageCommit
+            key={message.id}
             message={message}
             showDay={showDay}
           />
@@ -41,13 +42,21 @@ function useDoc(path) {
   const [ doc, setDoc ] = useState();
 
   useEffect(() => {
-    db.doc(path).onSnapshot(doc => {
-      setDoc({
-        ...doc.data(),
-        id: doc.id
-      });
+    let stillMounted = true;
+
+    db.doc(path).get().then(doc => {
+      if(stillMounted) {
+        setDoc({
+          ...doc.data(),
+          id: doc.id
+        });
+      }
     });
-  }, []);
+
+    return () => {
+      stillMounted = false;
+    }
+  }, [path]);
 
   return doc;
 }

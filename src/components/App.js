@@ -7,9 +7,6 @@ import { Router, Redirect } from "@reach/router";
 function App() {
 
   const user = useAuth();
-  
-  
-  
   return user ? (
     <div className="App">
       <Nav user={user} />
