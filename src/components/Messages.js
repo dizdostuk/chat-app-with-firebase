@@ -1,19 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 import useCollection from "../useCollection";
 import useDocWithCache from "../useDocWithCache";
 import formateDate from "date-fns/format";
 import isSameDate from "date-fns/is_same_day";
 
+function scrollDownManager(ref) {
+  useEffect(() => {
+    const node = ref.current;
+    node.scrollTop = node.scrollHeight;
+  });
+}
+
 function Messages({ channelId }) {
-  console.log(channelId)
   const messages = useCollection(
     `channels/${channelId}/messages`,
     "createdAt"
   );
 
+  const scrollerRef = useRef();
+  scrollDownManager(scrollerRef);
   return (
-    <div className="Messages">
+    <div ref={scrollerRef} className="Messages">
       <div className="EndOfMessages">That's every message!</div>
 
       {messages.map((message, index) => {
