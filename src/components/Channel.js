@@ -9,7 +9,7 @@ function Channel({ user, channelId }) {
   useEffect(() => {
     db.doc(`users/${user.uid}`).update({
       channels: {
-        [`channels.${channelId}`]: true
+        [channelId]: true
       }
     });
   }, [user.uid, channelId]);
@@ -21,7 +21,7 @@ function Channel({ user, channelId }) {
         <Messages channelId={channelId} />
         <ChatInputBox channelId={channelId} user={user} />
       </div>
-      <Members />
+      <Members channelID={channelId} />
     </div>
   );
 }
